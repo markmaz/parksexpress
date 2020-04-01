@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+       
+       
+<!--  JMS Queue Connection Factory --> 
+	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+  		<property name="brokerURL" value="tcp://localhost:61616" />
+  	</bean>
+	
+	
+<!-- OrderGuide Messaging -->
+	<bean id="orderGuideQ" class="org.apache.activemq.command.ActiveMQQueue">
+		<property name="physicalName" value="orderGuide"/>
+  	</bean>
+  	
+  	<bean id="orderGuideSender" class="com.parksexpress.jms.sender.OrderGuideSender">
+  		<property name="connectionFactory" ref="activeMQConnectionFactory"/>
+  		<property name="queue" ref="orderGuideQ"/>
+  	</bean>	
+  	
+  	<bean id="orderGuideListener" class="com.parksexpress.jms.mdp.OrderGuideReceiver">
+  		<property name="itemDAO" ref="orderGuideDAO"/>
+  	</bean>
+  	
+  	<bean id="orderGuideContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+  		<property name="connectionFactory" ref="activeMQConnectionFactory"/>
+  		<property name="destination" ref="orderGuideQ"/>
+  		<property name="messageListener" ref="orderGuideListener"/>
+  	</bean>
+  	
+ <!--  Item Pricing Messaging -->
+	<bean id="itemPricing" class="org.apache.activemq.command.ActiveMQQueue">
+		<property name="physicalName" value="itemPricing"/>
+  	</bean>
+	
+	<bean id="itemPricingSender" class="com.parksexpress.jms.sender.ItemPricingSender">
+		<property name="connectionFactory" ref="activeMQConnectionFactory"/>
+		<property name="destinationQueue" ref="itemPricing"/>
+	</bean>
+	
+	<bean id="itemPricingListener" class="com.parksexpress.jms.mdp.ItemPricingReceiver">
+		<property name="itemPricing" ref="as400ItemPricing"/>
+		<property name="futureItemPricing" ref="as400FutureItemPricing"/>
+	</bean>
+	
+	<bean id="itemPricingContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="activeMQConnectionFactory"/>
+		<property name="destination" ref="itemPricing"/>
+		<property name="messageListener" ref="itemPricingListener"/>
+	</bean>
+	
+<!-- Family Pricing Messaging -->
+	<bean id="familyPricing" class="org.apache.activemq.command.ActiveMQQueue">
+		<property name="physicalName" value="familyPricing"/>
+  	</bean>
+	
+	<bean id="familyPricingSender" class="com.parksexpress.jms.sender.FamilyPricingSender">
+		<property name="connectionFactory" ref="activeMQConnectionFactory"/>
+		<property name="destinationQueue" ref="familyPricing"/>
+	</bean>
+	
+	<bean id="familyPricingListener" class="com.parksexpress.jms.mdp.FamilyPricingReceiver">
+		<property name="priceBookDAO" ref="as400FamilyDAO"/>
+	</bean>
+	
+	<bean id="familyPricingContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="activeMQConnectionFactory"/>
+		<property name="destination" ref="familyPricing"/>
+		<property name="messageListener" ref="familyPricingListener"/>
+	</bean>       
+</beans>

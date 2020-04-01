@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+       
+       
+	<bean name="orderGuideDAO" class="com.parksexpress.dao.spring.as400.AS400OrderGuideDAO">
+		<property name="dataSource" ref="as400DataSource"/>
+		<property name="company"><value>${as400.company}</value></property>
+		<property name="department"><value>${as400.department}</value></property>
+		<property name="division"><value>${as400.division}</value></property>
+		<property name="warehouse"><value>${as400.warehouse}</value></property>
+	</bean>
+	
+	<bean name="as400ItemDAO" class="com.parksexpress.dao.spring.as400.AS400ItemDAO">
+		<property name="dataSource" ref="as400DataSource"/>
+	</bean>
+	
+	<bean name="jdbcUserDAO" class="com.parksexpress.dao.spring.mysql.JDBCUserDAO">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="storeDAO" ref="jdbcStoreDAO"/>
+	</bean>
+	
+	
+	<bean name="jdbcPricingDAO" class="com.parksexpress.dao.spring.mysql.JDBCPricingDAO">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+			
+	<bean name="jobDAO" class="com.parksexpress.dao.spring.mysql.JDBCJobDAO">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>	
+	<bean name="jdbcChainDAO" class="com.parksexpress.dao.spring.mysql.JDBCChainDAO">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>	
+	<bean name="jdbcStoreDAO" class="com.parksexpress.dao.spring.mysql.JDBCStoreDAO">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>	
+	<bean name="jdbcItemDAO" class="com.parksexpress.dao.spring.mysql.JDBCItemDAO">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>		
+	<bean name="jdbcPriceBookDAO" class="com.parksexpress.dao.spring.mysql.JDBCPriceBookDAO">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="itemDAO" ref="jdbcItemDAO"></property>
+	</bean>		
+	<bean name="jdbcHistoryDAO" class="com.parksexpress.dao.spring.mysql.JDBCHistoryDAO">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean name="as400FamilyDAO" class="com.parksexpress.dao.spring.as400.AS400FamilySRPDAO">
+		<property name="dataSource" ref="as400DataSource"/>
+		<property name="company"><value>${as400.company}</value></property>
+		<property name="department"><value>${as400.department}</value></property>
+		<property name="division"><value>${as400.division}</value></property>
+		<property name="warehouse"><value>${as400.warehouse}</value></property>
+	</bean>
+	
+	<bean name="approvedDistributionDAO" class="com.parksexpress.dao.spring.as400.AS400ApprovedDistributions">
+		<property name="dataSource" ref="as400DataSource"/>
+		<property name="rpgSrp" ref="RpgSRP"/>
+	</bean>
+	       
+	<bean name="vendorDAO" class="com.parksexpress.dao.spring.as400.AS400VendorDAO">
+		<property name="dataSource" ref="as400DataSource"/>
+	</bean>
+	
+	<bean name="reverseLookupDAO" class="com.parksexpress.dao.spring.as400.AS400ReverseLookup">
+		<property name="dataSource" ref="as400DataSource"/>
+	</bean>
+	
+	<bean name="invoiceDAO" class="com.parksexpress.dao.spring.as400.AS400InvoiceDAO">
+		<property name="dataSource" ref="as400DataSource"/>
+	</bean>	
+	
+	<bean name="invoiceReprintDAO" class="com.parksexpress.dao.spring.as400.AS400InvoiceReprintDAO">
+		<property name="dataSource" ref="as400DataSource"/>
+	</bean>		
+	
+	<bean name="movementDAO" class="com.parksexpress.dao.spring.as400.AS400MovementDAO">
+		<property name="dataSource" ref="as400DataSource"/>
+	</bean>
+	
+	<bean name="kitDAO" class="com.parksexpress.dao.spring.as400.AS400KitDAO">
+		<property name="dataSource" ref="as400DataSource"/>
+	</bean>	
+	
+	<bean name="emailAddressDAO" class="com.parksexpress.dao.spring.mysql.JDBCEmailAddress">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>	
+</beans>

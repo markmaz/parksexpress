@@ -1,0 +1,101 @@
+.horizontalSelectedTab {
+	cursor: pointer;
+	list-style-type: none;
+	position: relative;
+	background-color: #C5C9D9;
+	border-bottom: 1px #e5e5e5 solid;
+	border-top: 1px #e5e5e5 solid;
+	border-left: 1px #e5e5e5 solid;
+	font-size: small;
+	padding: 5px;	
+	float: left;
+}
+
+.horizontalNormalTab {
+	cursor: pointer;
+	list-style-type: none;
+	position: relative;
+	background-color: #f9f9f9;
+	border: 1px #e5e5e5 solid;
+	font-size: small;
+	padding: 5px; 
+	float: left;
+}
+
+.selectedTab {
+	cursor: pointer;
+	list-style-type: none;
+	position: relative;
+	background-color: #C5C9D9;
+	border-bottom: 1px #e5e5e5 solid;
+	border-top: 1px #e5e5e5 solid;
+	border-left: 1px #e5e5e5 solid;
+	font-size: small;
+	padding: 5px;
+}
+
+.normalTab {
+	cursor: pointer;
+	list-style-type: none;
+	position: relative;
+	background-color: #f9f9f9;
+	border: 1px #e5e5e5 solid;
+	font-size: small;
+	padding: 5px
+}
+
+.rollOver {
+	cursor: pointer;
+	list-style-type: none;
+	position: relative;
+	/*background-color: #E1E3EB;*/
+	background-color: #000;
+	border: 1px #e5e5e5 solid;
+	font-size: small;
+	padding: 5px	
+}
+
+.dataSection {
+	margin-bottom: 10px;
+	float: left;
+	background-color: #C5C9D9;
+	border-bottom: 1px #e5e5e5 solid;
+	border-top: 1px #e5e5e5 solid;
+	border-right: 1px #e5e5e5 solid;
+}
+
+.data {
+	/**background-color: #C5C9D9;**/
+	/**height: 400px;**/
+	width: 630px;
+	padding-left: 5px;
+	padding-top: 10px;
+	padding-right: 0px;
+}
+
+.queryInfo {
+	width: 500px;
+	padding-left: 5px;
+	padding-top: 10px;
+	padding-right: 0px;	
+	
+}
+.zones {
+	margin-left: 8px;
+	float: left;
+	width: 200px;
+}
+
+.options {
+	margin-left: 8px;
+	float: left;
+	width: 100px;
+}
+
+#even {
+	background-color: #fff;
+}
+
+#odd {
+	background-color: #f9f9f9;;
+}

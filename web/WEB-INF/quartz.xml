@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+<!-- 
+	Scheduler         
+-->
+ 	<bean id="chainImportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.chainImport}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	
+	<bean id="chainImportTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="chainImportJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.chainImport.schedule}</value></property>
+ 	</bean>
+ 	
+ 	<bean id="chainOrderGuideMapImportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.chainOrderGuideMapImport}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	 	
+	<bean id="chainOrderGuideMapTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="chainOrderGuideMapImportJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.chainOrderGuideMapImport.schedule}</value></property>
+ 	</bean>
+ 	 	 	
+ 	<bean id="familyPricingJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.familyPricing}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+
+	<bean id="familyPricingJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="familyPricingJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.familyPricing.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	<bean id="customerImportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.customerImport}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean> 	 	 
+ 	
+	<bean id="customerImportJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="customerImportJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.customerImport.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	<bean id="forceOutsJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.forceOuts}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean> 	 	
+ 	
+	<bean id="forceOutsJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="forceOutsJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.forceOuts.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	<bean id="invoiceJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.invoices}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	 		
+	<bean id="invoiceJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="invoiceJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.invoices.schedule}</value></property>
+ 	</bean>
+ 	 	 		
+ 	<bean id="itemImportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.items}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean> 	 	
+ 	
+	<bean id="itemImportJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="itemImportJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.items.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	<bean id="kitImportJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.kits}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	 		
+	<bean id="kitImportJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="kitImportJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.kits.schedule}</value></property>
+ 	</bean>
+ 	 	 		
+ 	<bean id="orderGuideJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.orderguide}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean> 	 	
+ 	
+	<bean id="orderGuideJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="orderGuideJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.orderguide.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	<bean id="priceBookJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.pricebook}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	 	
+	<bean id="priceBookJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="priceBookJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.pricebook.schedule}</value></property>
+ 	</bean>
+ 	 	 		
+ 	<bean id="priceChangeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.pricechange}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean> 	 		
+ 	
+	<bean id="priceChangeJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="priceChangeJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.pricechange.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	 <bean id="roundingCodeJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.roundingcode}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean> 
+ 	
+	<bean id="roundingCodeJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="roundingCodeJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.roundingcode.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	 <bean id="salesmanJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.salesman}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	
+	<bean id="salesmanJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="salesmanJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.salesman.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	 <bean id="srpHeirarchyJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.srpHeirarchy}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	
+	<bean id="srpHeirarchyJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="srpHeirarchyJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.srpHeirarchy.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	 <bean id="itemPricingJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.itemPricing}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	
+	<bean id="itemPricingJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="itemPricingJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.itemPricing.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	 <bean id="storeBookMapJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.storeBookMap}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	
+	<bean id="storeBookMapJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="storeBookMapJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.storeBookMap.schedule}</value></property>
+ 	</bean>
+ 	 	
+ 	 <bean id="storeMapJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+ 		<property name="jobClass"><value>com.parksexpress.scheduler.QuartzJob</value></property>
+ 		<property name="jobDataAsMap">
+ 			<map>
+ 				<entry key="service"><value>${parksexpress.jobs.srpStoreMap}</value></entry>
+ 				<entry key="server"><value>${ws.jobs.url}</value></entry>
+ 			</map>
+ 		</property>
+ 	</bean>
+ 	
+	<bean id="storeMapJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+ 		<property name="jobDetail" ref="storeMapJob"/>
+ 		<property name="cronExpression"><value>${parksexpress.jobs.srpStoreMap.schedule}</value></property>
+ 	</bean>
+ 	
+ 	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+ 		<property name="triggers">
+ 			<list>
+	 			<ref local="itemPricingJobTrigger"/>
+	 			<ref local="chainImportTrigger"/>
+	 			<ref local="chainOrderGuideMapTrigger"/>
+	 			<ref local="familyPricingJobTrigger"/>
+	 			<ref local="customerImportJobTrigger"/>
+	 			<ref local="forceOutsJobTrigger"/>
+	 			<ref local="invoiceJobTrigger"/>
+	 			<ref local="itemImportJobTrigger"/>
+	 			<ref local="kitImportJobTrigger"/>
+	 			<ref local="orderGuideJobTrigger"/>
+	 			<ref local="priceBookJobTrigger"/>
+	 			<ref local="roundingCodeJobTrigger"/>
+	 			<ref local="salesmanJobTrigger"/>
+	 			<ref local="srpHeirarchyJobTrigger"/>
+ 				<ref local="storeBookMapJobTrigger"/>
+ 				<ref local="storeMapJobTrigger"/>
+ 			</list>
+ 		</property>
+ 	</bean>
+ </beans>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+       
+	<bean name="logoutController" class="com.parksexpress.web.controllers.LogOutController"/>
+	<bean name="homeController" class="com.parksexpress.web.controllers.HomeController"/>
+	<bean name="reportController" class="com.parksexpress.web.controllers.ReportController"/>
+	<bean name="jobController" class="com.parksexpress.web.controllers.JobController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="jobService" ref="jobService"/>
+	</bean>
+	<bean name="userController" class="com.parksexpress.web.controllers.UserController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="userService" ref="userService"/>
+		<property name="storeService" ref="storeService"/>
+	</bean>	
+
+	<bean name="emailAddressController" class="com.parksexpress.web.controllers.EmaillAddressController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="emailService" ref="emailService"/>
+	</bean>	
+		
+	<bean name="kitController" class="com.parksexpress.web.controllers.KitController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="kitService" ref="kitService"/>
+	</bean>	
+		
+	<bean name="historyController" class="com.parksexpress.web.controllers.HistoryController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="transactionHistoryService" ref="historyService"/>
+	</bean>		
+	<bean name="searchController" class="com.parksexpress.web.controllers.SearchController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="chainService" ref="chainService"/>
+		<property name="storeService" ref="storeService"/>
+		<property name="itemService" ref="itemService"/>
+	</bean>
+	<bean name="hotSheetController" class="com.parksexpress.web.controllers.HotSheetController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="itemService" ref="as400ItemService"/>
+		<property name="chainService" ref="chainService"/>
+	</bean>	
+	<bean name="priceChangeController" class="com.parksexpress.web.controllers.PriceChangeController">
+		<property name="itemService" ref="as400ItemService"/>
+		<property name="priceBookService" ref="priceBookService"/>
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+	</bean>		
+	
+	<bean name="futurePriceChangeController" class="com.parksexpress.web.controllers.FuturePriceChangeController">
+		<property name="itemService" ref="as400ItemService"/>
+		<property name="priceBookService" ref="priceBookService"/>
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+	</bean>	
+		
+	<bean name="approvedDistributionController" class="com.parksexpress.web.controllers.ApprovedDistributionController">
+		<property name="approvedDistributionsService" ref="approvedDistributionService"/>
+		<property name="chainService" ref="chainService"/>
+		<property name="storeService" ref="storeService"/>
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+	</bean>
+
+	<bean name="movementController" class="com.parksexpress.web.controllers.MovementController">
+		<property name="priceBookService" ref="priceBookService"/>
+		<property name="movementService" ref="movementService"/>
+		<property name="storeService" ref="storeService"/>
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+	</bean>
+
+	<bean name="invoiceController" class="com.parksexpress.web.controllers.InvoiceController">
+		<property name="invoiceService" ref="invoiceService"/>
+		<property name="storeService" ref="storeService"/>
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+	</bean>
+
+	<bean name="invoiceReprintController" class="com.parksexpress.web.controllers.InvoiceReprintController">
+		<property name="invoiceReprintService" ref="invoiceReprintService"/>
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+	</bean>
+			
+	<bean name="reverseLookupController" class="com.parksexpress.web.controllers.ReverseLookupController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="vendorService" ref="vendorService"/>
+		<property name="priceBookService" ref="priceBookService"/>
+		<property name="reverseLookupService" ref="reverseLookupService"/>
+		<property name="chainService" ref="chainService"/>
+		<property name="itemService" ref="as400ItemService"/>
+	</bean>	
+			
+	<bean name="vendorController" class="com.parksexpress.web.controllers.VendorController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="vendorService" ref="vendorService"/>
+	</bean>
+	
+	<bean name="shelfTagController" class="com.parksexpress.web.controllers.ShelfTagController">
+		<property name="shelfTagService" ref="shelfTagService"/>
+		<property name="itemService" ref="itemService"/>
+		<property name="pricingService" ref="pricingService"/>
+		<property name="chainService" ref="chainService"/>
+		<property name="transactionHistoryService" ref="historyService"/>
+		<property name="storeService" ref="storeService"/>
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+	</bean>	
+			
+	<bean name="srpController" class="com.parksexpress.web.controllers.SRPController">
+		<property name="methodNameResolver" ref="methodNameResolver"/>
+		<property name="priceBookService" ref="priceBookService"/>
+		<property name="itemService" ref="itemService"/>
+		<property name="storeService" ref="storeService"/>
+		<property name="pricingService" ref="pricingService"/>
+		<property name="chainService" ref="chainService"/>
+		<property name="historyService" ref="historyService"/>
+	</bean>
+	<bean name="authenticationController" class="com.parksexpress.web.controllers.AuthenticationController">
+		<constructor-arg ref="accountService"/>
+		<property name="formView" value="logonForm"/>
+		<property name="successView" value="homePage"/>
+		<property name="commandName" value="user"/>
+		<property name="commandClass" value="com.parksexpress.domain.User"/>
+	</bean>
+	<bean name="userProfileController" class="com.parksexpress.web.controllers.UserProfileController">
+		<property name="formView" value="userProfile"/>
+		<property name="successView" value="userProfile"/>
+		<property name="commandName" value="user"/>
+		<property name="commandClass" value="com.parksexpress.domain.User"/>
+	</bean>		
+       
+</beans>

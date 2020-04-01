@@ -1,0 +1,92 @@
+<project name="ParksExpress" default="build" basedir=".">
+    <property file="build.properties" />
+
+    <path id="runtime.libs">
+        <fileset dir="${basedir}/web/WEB-INF/lib/runTime" includes="*.jar" />
+    </path>
+    <path id="test.libs">
+        <fileset dir="${basedir}/web/WEB-INF/lib/development" includes="*.jar" />
+    </path>
+
+    <target name="build" description="compile source">
+        <mkdir dir="${src.build}" />
+        <copy todir="${src.build}">
+            <fileset dir="${src.source}" excludes="**/*.java" />
+        </copy>
+        <javac srcdir="${src.source}" destdir="${src.build}">
+            <classpath refid="runtime.libs" />
+        </javac>
+    </target>
+
+    <target name="war" depends="build" description="create war file">
+        <mkdir dir="${web.build}" />
+
+		<copy todir="${web.build}">
+			<fileset dir="${web.dir}"/>
+		</copy>
+
+		<delete dir="${web.build}/WEB-INF/lib/runTime"/>
+		<delete dir="${web.build}/WEB-INF/lib/development"/>
+		<delete dir="${web.build}/WEB-INF/classes"/>
+<!--
+		<copy todir="${web.build}/WEB-INF/lib">
+            <fileset dir="${basedir}/web/WEB-INF/lib/runTime">
+                <exclude name="servlet-api-2.5-6.1.4.jar" />
+            </fileset>
+		</copy>
+-->		
+		<copy todir="${web.build}/WEB-INF/classes">
+			<fileset dir="${src.build}"/>
+		</copy>
+
+		<war destfile="${web.warfile}" needxmlfile="false" basedir="${web.build}"/>
+    </target>
+
+    <target name="buildUnitTest" depends="build" description="compile unit tests">
+        <mkdir dir="${test.build}" />
+        <javac srcdir="${test.source}" destdir="${test.build}" >
+            <classpath location="${src.build}" />
+            <classpath refid="runtime.libs" />
+            <classpath refid="test.libs" />
+        </javac>
+    </target>
+
+    <target name="unitTest" depends="buildUnitTest" description="run unit tests">
+        <junit printsummary="yes" haltonerror="yes" haltonfailure="yes" fork="yes">
+            <batchtest>
+                <fileset dir="${test.source}">
+					<include name="**/*Test*"/>
+					<exclude name="**/TestController.java"/>
+				</fileset>
+            </batchtest>
+            <formatter type="plain" usefile="false" />
+            <classpath>
+                <pathelement location="${src.build}" />
+                <pathelement location="${test.build}" />
+                <path refid="runtime.libs" />
+                <path refid="test.libs" />
+            </classpath>
+        </junit>
+    </target>
+
+    <target name="dist" depends="war" description="create distribution files">
+        <mkdir dir="${dist}" />
+        <copy todir="${dist}" file="${web.warfile}"/>
+    </target>
+
+
+    <target name="allTests" depends="unitTest" description="run all tests" />
+
+    <target name="clean" description="cleans build and test files">
+        <delete dir="${src.build}" />
+        <delete dir="${test.build}" />
+        <delete dir="${web.build}" />
+        <delete file="${web.warfile}" />
+    </target>
+
+    <target name="distClean" depends="clean" description="clean distribution files">
+        <delete dir="${dist}" />
+        <delete dir="${dist.build}" />
+    </target>
+
+</project>

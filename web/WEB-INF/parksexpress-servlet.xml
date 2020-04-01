@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+<!-- 
+	This is the default Web Application Context file. It uses a 
+	PropertyPlaceHolder extensively. To ensure your application works as desired,
+	place a file in your home directory named "yourAppName.properties" (replace "yourAppName" 
+	with your project name). A default file is included for	your convenience.
+ -->
+ 	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>file:${user.home}/parksexpress.properties</value>
+		</property>
+	</bean>
+
+	<import resource="messaging.xml"/>	
+	<import resource="database.xml"/>
+	<import resource="controllers.xml"/>
+	<import resource="as400.xml"/>
+	<import resource="dao.xml"/>
+	<import resource="services.xml"/>
+	
+	<!-- 
+	<import resource="quartz.xml"/>
+	-->
+	
+	<!-- SSL With ACEGI. Uncomment this section if you are going to use ACEGI for SSL.
+	     You'll need to make sure you have the correct jars in your classpath and 
+	     the environment you're using is set up for SSL.                                                                              *			
+	-->
+	<bean id="channelProcessingFilter"
+		class="org.acegisecurity.securechannel.ChannelProcessingFilter">
+		<property name="channelDecisionManager">
+			<ref bean="channelDecisionManager" />
+		</property>
+		<property name="filterInvocationDefinitionSource">
+			<value>${acegi.secure.urlPattern}</value>
+		</property>
+	</bean>
+
+	<bean id="channelDecisionManager"
+		class="org.acegisecurity.securechannel.ChannelDecisionManagerImpl">
+		<property name="channelProcessors">
+			<list>
+				<ref bean="secureChannelProcessor" />
+				<ref bean="insecureChannelProcessor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="secureChannelProcessor"
+		class="org.acegisecurity.securechannel.SecureChannelProcessor" />
+	<bean id="insecureChannelProcessor"
+		class="org.acegisecurity.securechannel.InsecureChannelProcessor" />	
+		
+	<!-- 
+		View resolvers	
+	 -->
+	
+	<!-- Default exception resolver. You should create more mappings to catch
+		 specific errors. This is a catch all by default. Comment to turn off. -->
+<!-- 
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">${view.resolver.defaultErrorPage}</prop>
+			</props>
+		</property>
+	</bean>	 
+-->
+	<!-- If you web application is going to upload files, you'll need this resolver. 
+	<bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <property name="maxUploadSize" value="${view.resolver.multipart.maxUploadSize}"/>
+    </bean>
+    -->
+    
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+	  <property name="basename" value="views"/>
+	</bean>
+
+	<bean id="viewController"
+		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />    	
+	<!-- 
+		***********************************************************************************************
+		* URL Mapping                                                                                 *			
+		*                                                                                             *
+		* We have an interceptor set up. The interceptor can look for Authentication or other things  *
+		* to process before the request is sent to the controller. By default everything should be    *
+		* be intercepted.                                                                             *
+		***********************************************************************************************
+	-->
+	<bean id="SRPMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="srpInterceptor" />
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="srp">srpController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="HotSheetMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="hotSheetInterceptor" />
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="reverseLookup">reverseLookupController</prop>
+				<prop key="vendor">vendorController</prop>
+				<prop key="hotSheet">hotSheetController</prop>
+				<prop key="reports">reportController</prop>
+				<prop key="movement">movementController</prop>
+				<prop key="kit">kitController</prop>
+			</props>
+		</property>
+	</bean>	
+	<bean id="PriceChangeMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="priceChangeInterceptor" />
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="priceChange">priceChangeController</prop>
+				<prop key="futurePriceChange">futurePriceChangeController</prop>
+			</props>
+		</property>
+	</bean>	
+	
+	<bean id="ApprovedDistributionMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="approvedDistributionInterceptor" />
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="approvedDistributions">approvedDistributionController</prop>
+			</props>
+		</property>
+	</bean>	
+	
+	<bean id="ShelfTagMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="shelfTagInterceptor" />
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="shelfTag">shelfTagController</prop>
+			</props>
+		</property>
+	</bean>			
+	<bean id="InvoiceMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="invoiceInterceptor" />
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="invoice">invoiceController</prop>
+				<prop key="invoiceReprint">invoiceReprintController</prop>
+			</props>
+		</property>
+	</bean>	
+	<bean id="noAuthURLMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<!-- property name="interceptors">
+			<list>
+				<ref bean="openSessionInViewInterceptor" />
+			</list>
+		</property-->		
+		<property name="mappings">
+			<props>
+				<prop key="home">homeController</prop>
+				<prop key="logon">authenticationController</prop>
+				<prop key="logout">logoutController</prop>
+				<prop key="userProfile">userProfileController</prop>
+				<prop key="jobController">jobController</prop>
+				<prop key="userController">userController</prop>
+				<prop key="search">searchController</prop>
+				<prop key="history">historyController</prop>		
+				<prop key="emailAddress">emailAddressController</prop>		
+			</props>
+		</property>
+	</bean>
+
+
+
+
+<!-- Interceptors -->
+	<bean id="srpInterceptor"
+		class="com.parksexpress.web.interceptors.PermissionInterceptor">
+		<property name="redirectPage" value="${interceptor.noPermission.redirectPage}" />
+		<property name="permissionName" value="SRP"/>
+	</bean>
+	<bean id="hotSheetInterceptor"
+		class="com.parksexpress.web.interceptors.PermissionInterceptor">
+		<property name="redirectPage" value="${interceptor.noPermission.redirectPage}" />
+		<property name="permissionName" value="Reports"/>
+	</bean>
+	<bean id="priceChangeInterceptor"
+		class="com.parksexpress.web.interceptors.PermissionInterceptor">
+		<property name="redirectPage" value="${interceptor.noPermission.redirectPage}" />
+		<property name="permissionName" value="Reports"/>
+	</bean>	
+	<bean id="approvedDistributionInterceptor"
+		class="com.parksexpress.web.interceptors.PermissionInterceptor">
+		<property name="redirectPage" value="${interceptor.noPermission.redirectPage}" />
+		<property name="permissionName" value="Reports"/>
+	</bean>	
+	<bean id="shelfTagInterceptor"
+		class="com.parksexpress.web.interceptors.PermissionInterceptor">
+		<property name="redirectPage" value="${interceptor.noPermission.redirectPage}" />
+		<property name="permissionName" value="Shelf Labels"/>
+	</bean>	
+	<bean id="invoiceInterceptor"
+		class="com.parksexpress.web.interceptors.PermissionInterceptor">
+		<property name="redirectPage" value="${interceptor.noPermission.redirectPage}" />
+		<property name="permissionName" value="Accounts Payable"/>
+	</bean>		
+	
+<!-- Parameter Resolvers -->
+	<bean id="methodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="action" />
+	</bean>
+
+<!--  Tile Configurator -->
+	<bean id="tileConfigurer"
+		class="org.springframework.web.servlet.view.tiles.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>${tile.configurator.tile.definitions}</value>
+			</list>
+		</property>
+	</bean>	
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="25"/>
+		<property name="username" value="mark@maslakowski.com"/>
+		<property name="password" value="Tac0b3ll"/>
+		<property name="javaMailProperties">
+			<props>
+            	<prop key="mail.smtp.starttls.enable">true</prop>
+            	<prop key="mail.smtp.auth">true</prop>
+            	<prop key="mail.transport.protocol">smtp</prop>
+        	</props>
+		</property>
+	</bean>
+	
+	<bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="mark@maslakowski.com"/>
+		<property name="subject" value="Retail Changes"/>
+	</bean>
+</beans>

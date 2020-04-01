@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+      
+
+	<bean id="defaultLobHandler"
+		class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
+
+	
+	<!-- 
+		C3P0 managed connection pool.
+	 -->		
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass"><value>${c3p0.driver}</value></property>
+		<property name="jdbcUrl"><value>${c3p0.url}</value></property>
+		<property name="user"><value>${c3p0.user}</value></property>
+		<property name="password"><value>${c3p0.password}</value></property>
+		<property name="initialPoolSize"><value>${c3p0.initialPoolSize}</value></property>
+		<property name="minPoolSize"><value>${c3p0.minPoolSize}</value></property>
+		<property name="maxPoolSize"><value>${c3p0.maxPoolSize}</value></property>
+		<property name="acquireRetryAttempts"><value>${c3p0.acquireRetryAttempts}</value></property>
+		<property name="acquireIncrement"><value>${c3p0.acquireIncrement}</value></property>
+		<property name="idleConnectionTestPeriod"><value>${c3p0.idleConnectionTestPeriod}</value></property>
+		<property name="maxIdleTime"><value>${c3p0.maxIdleTime}</value></property>
+		<property name="preferredTestQuery"><value>${c3p0.preferredTestQuery}</value></property>
+		<property name="testConnectionOnCheckin"><value>${c3p0.testConnectionOnCheckin}</value></property>
+	</bean>	
+		
+	<bean id="as400DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass"><value>${c3p0.as400.driver}</value></property>
+		<property name="jdbcUrl"><value>${c3p0.as400.url}</value></property>
+		<property name="user"><value>${c3p0.as400.user}</value></property>
+		<property name="password"><value>${c3p0.as400.password}</value></property>
+		<property name="initialPoolSize"><value>${c3p0.initialPoolSize}</value></property>
+		<property name="minPoolSize"><value>${c3p0.minPoolSize}</value></property>
+		<property name="maxPoolSize"><value>${c3p0.maxPoolSize}</value></property>
+		<property name="acquireRetryAttempts"><value>${c3p0.acquireRetryAttempts}</value></property>
+		<property name="acquireIncrement"><value>${c3p0.acquireIncrement}</value></property>
+		<property name="idleConnectionTestPeriod"><value>${c3p0.idleConnectionTestPeriod}</value></property>
+		<property name="maxIdleTime"><value>${c3p0.maxIdleTime}</value></property>
+		<property name="preferredTestQuery"><value>${c3p0.preferredTestQuery}</value></property>
+		<property name="testConnectionOnCheckin"><value>${c3p0.testConnectionOnCheckin}</value></property>
+	</bean>	
+			
+	<bean id="as400ConnectionPool" class="com.ibm.as400.access.AS400ConnectionPool">
+		<property name="maxConnections"><value>${as400.maxConnections}</value></property>
+		<property name="maxInactivity"><value>${as400.maxInactivity}</value></property>
+		<property name="maxLifetime"><value>${as400.maxLifetime}</value></property>
+		<property name="cleanupInterval"><value>${as400.cleanupInterval}</value></property>
+	</bean>	
+</beans>

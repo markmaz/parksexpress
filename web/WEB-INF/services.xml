@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+	<bean name="accountService" class="com.parksexpress.services.impl.AccountServiceImpl">
+		<constructor-arg ref="jdbcUserDAO"/>
+	</bean>
+	<bean name="jobService" class="com.parksexpress.services.impl.JobServiceImpl">
+		<property name="jobDAO" ref="jobDAO"/>
+		<property name="webServiceURL">
+			<value>${ws.jobs.url}</value>
+		</property>
+	</bean>	
+	<bean name="userService" class="com.parksexpress.services.impl.UserServiceImpl">
+		<property name="userDAO" ref="jdbcUserDAO"/>
+	</bean>	
+	<bean name="chainService" class="com.parksexpress.services.impl.ChainServiceImpl">
+		<property name="chainDAO" ref="jdbcChainDAO"/>
+	</bean>
+	<bean name="storeService" class="com.parksexpress.services.impl.StoreServiceImpl">
+		<property name="storeDAO" ref="jdbcStoreDAO"/>
+	</bean>
+	<bean name="priceBookService" class="com.parksexpress.services.impl.PriceBookServiceImpl">
+		<property name="priceBookDAO" ref="jdbcPriceBookDAO"/>
+		<property name="itemPricingSender" ref="itemPricingSender"/>
+		<property name="familyPricingSender" ref="familyPricingSender"/>
+		<property name="AS400PriceBookDAO" ref="as400FamilyDAO" />
+	</bean>	
+
+	<bean name="itemService" class="com.parksexpress.services.impl.ItemServiceImpl">
+		<property name="itemDAO" ref="jdbcItemDAO"/>
+		<property name="orderGuide" ref="orderGuideSender"/>
+	</bean>		
+	<bean name="pricingService" class="com.parksexpress.services.impl.PricingServiceImpl">
+		<property name="rpg" ref="RpgSRP"/>
+		<property name="priceBookDAO" ref="jdbcPriceBookDAO"/>
+		<property name="pricingDAO" ref="jdbcPricingDAO"/>
+	</bean>
+	<bean name="historyService" class="com.parksexpress.services.impl.TransactionHistoryServiceImpl">
+		<property name="historyDAO" ref="jdbcHistoryDAO"/>
+	</bean>
+	
+	<bean name="as400ItemService" class="com.parksexpress.services.AS400.impl.AS400ItemService">
+		<property name="itemDAO" ref="as400ItemDAO"/>
+	</bean>
+	
+	<bean name="approvedDistributionService" class="com.parksexpress.services.AS400.impl.ApprovedDistributionsService">
+		<property name="itemDAO" ref="approvedDistributionDAO"/>
+	</bean>	
+	
+	<bean name="shelfTagService" class="com.parksexpress.services.AS400.impl.ShelfTagServiceImpl">
+		<property name="shelfLabelRequest" ref="shelfTagRequest"/>
+	</bean>		
+	
+	<bean name="vendorService" class="com.parksexpress.services.impl.VendorServiceImpl">
+		<property name="vendorDAO" ref="vendorDAO"/>
+	</bean>
+	
+	<bean name="reverseLookupService" class="com.parksexpress.services.impl.ReverseLookupServiceImpl">
+		<property name="reverseLookupDAO" ref="reverseLookupDAO"/>
+	</bean>
+	
+	<bean name="invoiceService" class="com.parksexpress.services.impl.InvoiceServiceImpl">
+		<property name="invoiceDAO" ref="invoiceDAO"/>
+	</bean>	
+	
+	<bean name="invoiceReprintService" class="com.parksexpress.services.impl.InvoiceReprintServiceImpl">
+		<property name="PDFGenerator" ref="pdfCreator"/>
+		<property name="invoiceReprintDAO" ref="invoiceReprintDAO"/>
+	</bean>		
+	
+	<bean name="movementService" class="com.parksexpress.services.impl.MovementImpl">
+		<property name="movementDAO" ref="movementDAO"/>
+	</bean>
+	
+	<bean name="kitService" class="com.parksexpress.services.impl.KitServiceImpl">
+		<property name="kitDAO" ref="kitDAO"/>
+	</bean>
+	
+	<bean name="emailService" class="com.parksexpress.services.impl.EmailServiceImpl">
+		<property name="emailAddressDAO" ref="emailAddressDAO"/>
+		<property name="transactionHistoryService" ref="historyService"/>
+		<property name="mailSender" ref="mailSender"/>
+		<property name="simpleMailMessage" ref="templateMessage"/>
+	</bean>
+</beans>

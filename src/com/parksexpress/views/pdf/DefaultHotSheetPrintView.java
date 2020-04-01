@@ -1,0 +1,119 @@
+package com.parksexpress.views.pdf;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.parksexpress.domain.item.Item;
+
+public class DefaultHotSheetPrintView extends AbstractParksexpressPrintView {
+	public DefaultHotSheetPrintView(){}
+	
+	private PdfPTable createTable(final List<String> columns,
+			final List<Item> data, final String title) {
+		final PdfPTable table = new PdfPTable(new float[]{.75f, .75f, .75f, 3.5f, 1.25f, 1.25f, 1f});
+		table.setHorizontalAlignment(Element.ALIGN_LEFT);
+		final int width = 100;
+		table.setWidthPercentage(width);
+		table.setHeaderRows(1);
+
+		for (int i = 0; i < columns.size(); i++) {
+			final float padding = 5f;
+			final PdfPCell cell = new PdfPCell();
+			cell.setPaddingBottom(padding);
+			cell.setPaddingLeft(padding);
+
+			final Paragraph p = new Paragraph((String) columns.get(i), DATA_FONT);
+			cell.addElement(p);
+			table.addCell(cell);
+		}
+
+		this.generateTableCells(data, table);
+
+		return table;
+	}
+
+	private void generateTableCells(final List<Item> data, final PdfPTable table) {
+		for (int i = 0; i < data.size(); i++) {
+			final Item item = data.get(i);
+
+			float shading = 0;
+			final float darkerShading = .9f;
+			
+			if (i % 2 == 0) {
+				shading = darkerShading;
+			} else {
+				shading = 0;
+			}
+
+			final DecimalFormat format = new DecimalFormat("#.00");
+			
+			final Paragraph p0 = new Paragraph(item.getCheckDigitItemNumber(),
+					DefaultHotSheetPrintView.DATA_FONT);
+			final Paragraph p1 = new Paragraph(item.getPack(), DefaultHotSheetPrintView.DATA_FONT);
+			final Paragraph p2 = new Paragraph(item.getSize(), DefaultHotSheetPrintView.DATA_FONT);
+			final Paragraph p3 = new Paragraph(item.getDescription(), DefaultHotSheetPrintView.DATA_FONT);
+			final Paragraph p4 = new Paragraph(item.getCartonUPCNumber(), DefaultHotSheetPrintView.DATA_FONT);
+			final Paragraph p5 = new Paragraph(item.getRetailUPCNumber(), DefaultHotSheetPrintView.DATA_FONT);
+			final Paragraph p6 = new Paragraph("$" + format.format(item.getMarketCost()),
+					DefaultHotSheetPrintView.DATA_FONT);
+
+
+			final PdfPCell cell0 = new PdfPCell(p0);
+			cell0.setGrayFill(shading);
+
+			final PdfPCell cell1 = new PdfPCell(p1);
+			cell1.setGrayFill(shading);
+
+			final PdfPCell cell2 = new PdfPCell(p2);
+			cell2.setGrayFill(shading);
+
+			final PdfPCell cell3 = new PdfPCell(p3);
+			cell3.setGrayFill(shading);
+
+			final PdfPCell cell4 = new PdfPCell(p4);
+			cell4.setGrayFill(shading);
+
+			final PdfPCell cell5 = new PdfPCell(p5);
+			cell5.setGrayFill(shading);
+			cell5.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+			final PdfPCell cell6 = new PdfPCell(p6);
+			cell6.setGrayFill(shading);
+			cell6.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+			table.addCell(cell0);
+			table.addCell(cell1);
+			table.addCell(cell2);
+			table.addCell(cell3);
+			table.addCell(cell4);
+			table.addCell(cell5);
+			table.addCell(cell6);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void renderData(final Document document, final Map map) throws Exception {
+		final List<String> columns = new ArrayList<String>();
+		columns.add("Item #");
+		columns.add("Pack");
+		columns.add("Size");
+		columns.add("Description");
+		columns.add("Carton UPC");
+		columns.add("Retail UPC");
+		columns.add("Regular Price");
+		
+		final PdfPTable table = this.createTable(columns, (List<Item>) map
+				.get(DATA), (String)map.get(REPORT_TITLE));
+		document.add(table);
+		
+	}
+
+}

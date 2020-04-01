@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://activemq.apache.org/schema/core 
+       http://activemq.apache.org/schema/core/activemq-core.xsd">
+       
+	<bean name="RpgSRP" class="com.parksexpress.as400.util.RpgSrp">
+		<property name="password" value="${as400.password}"/>
+		<property name="username" value="${as400.username}"/>
+		<property name="programName" value="${as400.programName.srp}"/>
+		<property name="server" value="${as400.server}"/>
+		<property name="warehouse" value="  1"/>
+		<property name="connectionPool" ref="as400ConnectionPool"/>
+	</bean>
+	<bean name="as400ItemPricing" class="com.parksexpress.as400.util.ItemPricing">
+		<property name="password" value="${as400.password}"/>
+		<property name="username" value="${as400.username}"/>
+		<property name="programName" value="${as400.programName.itemPricing}"/>
+		<property name="server" value="${as400.server}"/>
+		<property name="connectionPool" ref="as400ConnectionPool"/>		
+	</bean>
+	<bean name="as400FutureItemPricing" class="com.parksexpress.as400.util.FutureItemPricing">
+		<property name="password" value="${as400.password}"/>
+		<property name="username" value="${as400.username}"/>
+		<property name="programName" value="${as400.programName.futureItemPricing}"/>
+		<property name="server" value="${as400.server}"/>
+		<property name="connectionPool" ref="as400ConnectionPool"/>		
+		<property name="endDate" value="${as400.endDate}"/>
+	</bean>	
+	<bean name="shelfTagRequest" class="com.parksexpress.as400.util.RpgShelfLableRequest">
+		<property name="password" value="${as400.password}"/>
+		<property name="username" value="${as400.username}"/>
+		<property name="programName" value="${as400.programName.shelfTagRequest}"/>
+		<property name="server" value="${as400.server}"/>
+		<property name="connectionPool" ref="as400ConnectionPool"/>		
+	</bean>		
+	<bean name="pdfCreator" class="com.parksexpress.as400.util.PDFCreator">
+		<property name="password" value="${as400.password}"/>
+		<property name="username" value="${as400.username}"/>
+		<property name="programName" value="${as400.programName.pdfCreator}"/>
+		<property name="server" value="${as400.server}"/>
+		<property name="connectionPool" ref="as400ConnectionPool"/>		
+		<property name="warehouse" value="  1"/>
+	</bean>		
+</beans>

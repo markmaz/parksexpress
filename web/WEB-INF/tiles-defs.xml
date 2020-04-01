@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<tiles-definitions>
+	<!-- Base Tiles Definition -->
+	<definition name=".base" path="/WEB-INF/jsp/base/base.jsp">
+		<put name="title" value="Parks Express" />
+		<put name="titleBar" value="/WEB-INF/jsp/base/titleBar.jsp" />
+		<put name="navBar" value="/WEB-INF/jsp/base/navBar.jsp" />
+		<put name="content" value="/WEB-INF/jsp/base/test.jsp" />
+	</definition>
+	
+	<definition name=".admin_base" path="/WEB-INF/jsp/admin/adminHome.jsp">
+		<put name="title" value="Parks Express" />
+		<put name="titleBar" value="/WEB-INF/jsp/admin/adminTop.jsp" />
+		<put name="content" value="/WEB-INF/jsp/admin/home.jsp" />
+	</definition>	
+	
+	<!-- Home -->
+	<definition name=".homePage" extends=".base">
+		<put name="title" value="Parks Express - Home Page" />
+		<put name="content" value="/WEB-INF/jsp/homeContent.jsp"/>
+	</definition>
+	
+	<definition name=".reports" extends=".base">
+		<put name="title" value="Parks Express - Reports" />
+		<put name="content" value="/WEB-INF/jsp/reports.jsp"/>
+	</definition>
+		
+	<definition name=".itemAllowances" extends=".base">
+		<put name="title" value="Parks Express - Item Allowances" />
+		<put name="content" value="/WEB-INF/jsp/hotSheet/itemAllowance/itemAllowances.jsp"/>
+	</definition>
+		
+	<definition name=".movement" extends=".base">
+		<put name="title" value="Parks Express - Movement Report" />
+		<put name="content" value="/WEB-INF/jsp/movementReport/movement.jsp"/>
+	</definition>
+		
+	<definition name=".invoice" extends=".base">
+		<put name="title" value="Parks Express - Invoice" />
+		<put name="content" value="/WEB-INF/jsp/invoice/invoice.jsp"/>
+	</definition>
+			
+	<definition name=".invoiceReprint" extends=".base">
+		<put name="title" value="Parks Express - Invoice Reprint" />
+		<put name="content" value="/WEB-INF/jsp/invoiceReprint/invoiceReprint.jsp"/>
+	</definition>
+				
+	<definition name=".newItems" extends=".base">
+		<put name="title" value="Parks Express - New Items" />
+		<put name="content" value="/WEB-INF/jsp/hotSheet/newItems/newItems.jsp"/>
+	</definition>
+		
+	<definition name=".discontinuedItems" extends=".base">
+		<put name="title" value="Parks Express - Discontinued Items" />
+		<put name="content" value="/WEB-INF/jsp/hotSheet/discontinuedItems/discontinuedItems.jsp"/>
+	</definition>
+				
+	<definition name=".suspendedItems" extends=".base">
+		<put name="title" value="Parks Express - Suspended Items" />
+		<put name="content" value="/WEB-INF/jsp/hotSheet/suspendedItems/suspendedItems.jsp"/>
+	</definition>
+					
+	<definition name=".priceChangeReport" extends=".base">
+		<put name="title" value="Parks Express - Suspended Items" />
+		<put name="content" value="/WEB-INF/jsp/priceChangeReport/priceChange.jsp"/>
+	</definition>
+
+	<definition name=".futurePriceChangeReport" extends=".base">
+		<put name="title" value="Parks Express - Suspended Items" />
+		<put name="content" value="/WEB-INF/jsp/priceChangeReport/futurePriceChange.jsp"/>
+	</definition>
+	
+	<definition name=".approvedDistributions" extends=".base">
+		<put name="title" value="Parks Express - Approved Distributions" />
+		<put name="content" value="/WEB-INF/jsp/approvedDistributions/approvedDistribution.jsp"/>
+	</definition>						
+						
+	<definition name=".userProfile" path="/WEB-INF/jsp/userProfile.jsp">
+	</definition>
+	
+	<definition name=".jobSummary" extends=".base">
+		<put name="title" value="Parks Express - Jobs"/>
+		<put name="content" value="/WEB-INF/jsp/admin/jobPage.jsp"/>
+	</definition>
+
+	<definition name=".jobHistory" extends=".base">
+		<put name="title" value="Parks Express - Job History"/>
+		<put name="content" value="/WEB-INF/jsp/admin/jobHistory.jsp"/>
+	</definition>
+	
+	<definition name=".userSummary" extends=".base">
+		<put name="title" value="Parks Express - User Search"/>
+		<put name="content" value="/WEB-INF/jsp/admin/users.jsp"/>
+	</definition>
+	
+	<definition name=".userDetail" extends=".base">
+		<put name="title" value="Parks Express - User Detail"/>
+		<put name="content" value="/WEB-INF/jsp/admin/userDetail.jsp"/>
+	</definition>
+
+	<definition name=".adminHistory" extends=".base">
+		<put name="title" value="Parks Express - History"/>
+		<put name="content" value="/WEB-INF/jsp/admin/adminHistory.jsp"/>
+	</definition>
+			
+	<definition name=".emailAddressDisplay" extends=".base">
+		<put name="title" value="Parks Express - Email"/>
+		<put name="content" value="/WEB-INF/jsp/email/email.jsp"/>
+	</definition>
+	
+	<definition name=".srpSearch" extends=".base">
+		<put name="title" value="Parks Express - SRP"/>
+		<put name="content" value="/WEB-INF/jsp/srp/srpSearch.jsp"/>
+	</definition>
+	
+	<definition name=".srpScreen" extends=".base">
+		<put name="title" value="Parks Express - SRP"/>
+		<put name="content" value="/WEB-INF/jsp/srp/srp.jsp"/>
+	</definition>
+
+	<definition name=".shelfTagRequest" extends=".base">
+		<put name="title" value="Parks Express - ShelfTag Request"/>
+		<put name="content" value="/WEB-INF/jsp/shelfTag/shelfTagRequest.jsp"/>
+	</definition>
+	
+	<definition name=".reverseLookupDisplay" extends=".base">
+		<put name="title" value="Parks Express - Reverse Lookup"/>
+		<put name="content" value="/WEB-INF/jsp/reverseLookUp/reverseLookup.jsp"/>
+	</definition>
+	
+	<definition name=".history" extends=".base">
+		<put name="title" value="Parks Express - History"/>
+		<put name="content" value="/WEB-INF/jsp/transactions/history.jsp"/>
+	</definition>
+
+	<definition name=".kitComponent" extends=".base">
+		<put name="title" value="Parks Express - History"/>
+		<put name="content" value="/WEB-INF/jsp/hotSheet/kitComponents/kitComponent.jsp"/>
+	</definition>
+		
+	<definition name=".reverseLookupData" path="/WEB-INF/jsp/reverseLookUp/reverseLookupData.jsp"/>	
+	<definition name=".reverseLookupChainData" path="/WEB-INF/jsp/reverseLookUp/reverseLookupChainData.jsp"/>	
+	<definition name=".shelfTagData" path="/WEB-INF/jsp/shelfTag/shelfTagData.jsp"/>
+	<definition name=".shelfTagSubmitted" path="/WEB-INF/jsp/shelfTag/shelfTagSubmitted.jsp"/>	
+	<definition name=".priceChangeData" path="/WEB-INF/jsp/priceChangeReport/priceChangeData.jsp"/>
+	<definition name=".futurePriceChangeData" path="/WEB-INF/jsp/priceChangeReport/futurePriceChangeData.jsp"/>
+	<definition name=".itemAllowanceData" path="/WEB-INF/jsp/hotSheet/itemAllowance/itemAllowanceData.jsp"/>
+	<definition name=".newItemData" path="/WEB-INF/jsp/hotSheet/newItems/newItemData.jsp"/>		
+	<definition name=".discontinuedItemData" path="/WEB-INF/jsp/hotSheet/discontinuedItems/discontinuedItemData.jsp"/>
+	<definition name=".suspendedItemData" path="/WEB-INF/jsp/hotSheet/suspendedItems/suspendedItemData.jsp"/>
+	<definition name=".approvedDistributionsData" path="/WEB-INF/jsp/approvedDistributions/approvedDistributionData.jsp"/>
+	<definition name=".approvedDistributionsForChain" path="/WEB-INF/jsp/approvedDistributions/approvedDistributionsForChain.jsp"/>
+	<definition name=".srpHeader" path="/WEB-INF/jsp/srp/srpHeaderData.jsp"/>
+	<definition name=".srpClass" path="/WEB-INF/jsp/srp/srpClassData.jsp"/>
+	<definition name=".srpFamily" path="/WEB-INF/jsp/srp/srpFamilyData.jsp"/>
+	<definition name=".srpItem" path="/WEB-INF/jsp/srp/srpItemData.jsp"/>
+	<definition name=".srpZones" path="/WEB-INF/jsp/srp/srpZones.jsp"/>
+	<definition name=".zoneStores" path="/WEB-INF/jsp/srp/zoneStores.jsp"/>
+	<definition name=".itemDetails" path="/WEB-INF/jsp/srp/itemDetails.jsp"/>
+	<definition name=".itemListDetails" path="/WEB-INF/jsp/srp/itemListDetails.jsp"/>
+	<definition name=".itemDetailsJSON" path="/WEB-INF/jsp/srp/itemDetailsJSON.jsp"/>
+	<definition name=".srpMessage" path="/WEB-INF/jsp/srp/srp_message.jsp"/>
+	<definition name=".message" path="/WEB-INF/jsp/base/message.jsp"/>
+	<definition name=".familySRPForm" path="/WEB-INF/jsp/srp/familyForm.jsp"/>
+	<definition name=".userTypeAhead" path="/WEB-INF/jsp/admin/userSearchAhead.jsp"/>
+	<definition name=".chainStoreResults" path="/WEB-INF/jsp/admin/chainStoreResults.jsp"/>
+	<definition name=".userstores" path="/WEB-INF/jsp/admin/userstores.jsp"/>
+	<definition name=".srpSearchResults" path="/WEB-INF/jsp/srp/srpSearchResults.jsp"/>
+	<definition name=".transactionHistory" path="/WEB-INF/jsp/srp/transHistory.jsp"/>
+	<definition name=".invoiceData" path="/WEB-INF/jsp/invoice/invoiceData.jsp"/>
+	<definition name=".invoiceReprintData" path="/WEB-INF/jsp/invoiceReprint/invoiceReprintData.jsp"/>
+	<definition name=".movementData" path="/WEB-INF/jsp/movementReport/movementData.jsp"/>
+	<definition name=".shortHistory" path="/WEB-INF/jsp/transactions/shortHistory.jsp"/>
+	<definition name=".kitComponentData" path="/WEB-INF/jsp/hotSheet/kitComponents/kitComponentData.jsp"/>
+	<definition name=".srpSuspendedData" path="/WEB-INF/jsp/srp/suspendedItemData.jsp"/>
+	<definition name=".findSearchItems" path="/WEB-INF/jsp/search/findSearchItems.jsp"/>
+	<definition name=".vendorSearchResults" path="/WEB-INF/jsp/vendor/vendorSearchResults.jsp"/>
+	
+	<definition name=".emailAddressEdit" path="/WEB-INF/jsp/email/emailEdit.jsp"/>	
+	<definition name=".emailAddressNew" path="/WEB-INF/jsp/email/emailNew.jsp"/>	
+	
+	<!--  ErrorPage -->
+	<definition name=".errorPageHeader" path="/WEB-INF/jsp/base/header.jsp">
+		<put name="pageName" value="Error"/>
+	</definition>
+	
+	<!-- LogOnForm -->
+	<definition name=".logonForm" path="/WEB-INF/jsp/logon/logon.jsp">
+	</definition>
+	
+	<definition name=".retrievePinSuccess" extends=".base">
+		<put name="header" value=".retrievePinHeader" type="definition"/>
+		<put name="title" value="Pin Retrieval - LifeWay Christian Resources"/>
+		<put name="content" value="/WEB-INF/jsp/pinRetrieval/pinRetrievalSuccess.jsp"/>
+	</definition>	
+</tiles-definitions>
